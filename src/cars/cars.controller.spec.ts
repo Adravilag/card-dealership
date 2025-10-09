@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CarsController } from './cars.controller';
 import { CarsService } from './cars.service';
-import { CreateCarDto, UpdateCarDto } from './dtos';
+import { CreateCarDto, UpdateCarDto } from './dto';
 
 describe('CarsController', () => {
   let controller: CarsController;
@@ -15,6 +15,11 @@ describe('CarsController', () => {
 
     controller = module.get<CarsController>(CarsController);
     service = module.get<CarsService>(CarsService);
+    
+    // Agregar datos de prueba
+    service.create({ brand: 'Toyota', model: 'Corolla', year: 2020 });
+    service.create({ brand: 'Honda', model: 'Civic', year: 2019 });
+    service.create({ brand: 'Ford', model: 'Mustang', year: 2021 });
   });
 
   it('should be defined', () => {
@@ -66,7 +71,7 @@ describe('CarsController', () => {
     
     const result = controller.deleteCar(createdCar.id);
     expect(result).toBeDefined();
-    expect(result.message).toBe(`Car with ID ${createdCar.id} deleted`);
+    expect(result.message).toBe(`Car with ID '${createdCar.id}' deleted successfully`);
   });
 
 });
